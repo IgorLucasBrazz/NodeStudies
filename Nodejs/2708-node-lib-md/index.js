@@ -8,15 +8,31 @@ function trataErro(erro) {
     throw new Error(chalk.red(erro.code, 'não há arquivo no diretorio'));
 }
 
-function pegaArquivo(caminhoDoArquivo) {
-    const encoding = 'utf-8';
-    fs.promises
-        .readFile(caminhoDoArquivo, encoding)
-        .then((texto) => console.log(chalk.green(texto))) //callback (texto) e chamaremos uma arrow function, passando um console.log
-        .catch(trataErro)
+async function pegaArquivo(caminhoDoArquivo){
+    try{
+        const encoding = 'utf-8';
+        const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
+        console.log(chalk.green(texto));
+    }
+    catch(erro){
+        trataErro(erro);
+    }
 }
 
+pegaArquivo('./arquivos/texto.md');
+pegaArquivo('./arquivos/');
 
+
+//Promises
+// function pegaArquivo(caminhoDoArquivo) {
+//     const encoding = 'utf-8';
+//     fs.promises
+//         .readFile(caminhoDoArquivo, encoding)
+//         .then((texto) => console.log(chalk.green(texto))) //callback (texto) e chamaremos uma arrow function, passando um console.log
+//         .catch(trataErro)
+// }
+
+//Sincrona
 // function pegaArquivo(caminhoDoArquivo) {
 //     const encoding = 'utf-8';
 //     fs.readFile(caminhoDoArquivo, encoding, (erro, texto) => {
@@ -27,5 +43,3 @@ function pegaArquivo(caminhoDoArquivo) {
 //     })
 
 // }
-
-pegaArquivo('./arquivos/texto.md')
