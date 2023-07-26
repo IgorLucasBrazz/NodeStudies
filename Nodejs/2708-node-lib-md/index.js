@@ -17,13 +17,14 @@ async function pegaArquivo(caminhoDoArquivo){
     catch(erro){
         trataErro(erro);
     } finally {
-        console.log(chalk.yellow('operação concluída'));
+        console.log(chalk.yellow('operação concluída!'));
       }
     
 }
 
 pegaArquivo('./arquivos/texto.md');
 pegaArquivo('./arquivos/');
+
 
 
 //Promises
