@@ -2,6 +2,15 @@
 import fs from 'fs'
 import chalk from 'chalk';
 
+// 
+
+function extraiLinks(texto){
+    const regex = /\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
+
+    const capturas = [...texto.matchAll(regex)];//expande o conteudo dentro de um array
+    const result = capturas.map(captura =>({[captura[1]]: [captura[2]]}));
+    return result;
+}
 
 function trataErro(erro) {
     console.log(erro);
@@ -12,7 +21,7 @@ async function pegaArquivo(caminhoDoArquivo){
     try{
         const encoding = 'utf-8';
         const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
-        console.log(chalk.green(texto));
+        console.log(extraiLinks(texto));
     }
     catch(erro){
         trataErro(erro);
@@ -23,7 +32,8 @@ async function pegaArquivo(caminhoDoArquivo){
 }
 
 pegaArquivo('./arquivos/texto.md');
-pegaArquivo('./arquivos/');
+//pegaArquivo('./arquivos/');
+
 
 
 
@@ -47,3 +57,5 @@ pegaArquivo('./arquivos/');
 //     })
 
 // }
+
+// \[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)
