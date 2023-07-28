@@ -9,7 +9,7 @@ function extraiLinks(texto){
 
     const capturas = [...texto.matchAll(regex)];//expande o conteudo dentro de um array
     const result = capturas.map(captura =>({[captura[1]]: [captura[2]]}));
-    return result;
+    return result.length !== 0 ? result : 'Não há links no arquivo!!!';
 }
 
 function trataErro(erro) {
@@ -21,7 +21,7 @@ async function pegaArquivo(caminhoDoArquivo){
     try{
         const encoding = 'utf-8';
         const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
-        console.log(extraiLinks(texto));
+        return extraiLinks(texto);
     }
     catch(erro){
         trataErro(erro);
@@ -31,7 +31,7 @@ async function pegaArquivo(caminhoDoArquivo){
     
 }
 
-pegaArquivo('./arquivos/texto.md');
+export default pegaArquivo
 //pegaArquivo('./arquivos/');
 
 
